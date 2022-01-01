@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     var fruits: [Fruit] = fruitsData
     
+    @State private var isShowingSettings: Bool = false
+    
     var body: some View {
         NavigationView {
             List {
@@ -21,6 +23,17 @@ struct ContentView: View {
                 }
             }//: NAVIGATION
             .navigationTitle("Fruits")
+            .navigationBarItems(
+                trailing:
+                    Button(action: {
+                        isShowingSettings = true
+                    }) {
+                        Image(systemName: "slider.horizontal.3")
+                    } //: BUTTON
+                    .sheet(isPresented: $isShowingSettings) {
+                        SettingsView()
+                    }
+            )
         }
     }
 }
@@ -28,6 +41,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(fruits: fruitsData)
+            .preferredColorScheme(.dark)
         
     }
 }
